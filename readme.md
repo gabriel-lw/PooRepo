@@ -1,4 +1,4 @@
-![GitHub License](https://img.shields.io/github/license/gabriel-lw/PooRepo)
+![GitHub License](https://img.shields.io/github/license/gabriel-lw/PooRepo?color=red)
 
 # Repositorio POO 2026-2
 
