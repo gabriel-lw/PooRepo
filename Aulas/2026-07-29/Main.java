@@ -6,11 +6,11 @@ public class Main{
         // sigla - da diciplina
         //todos os dias da semana que tem aula dessa diciplina
 
+        //até 5 diciplinas
+
         //por fim imprima:
         // na disciplina **** voce tem aulas nos seguintes dias:
-        // seg
-        // - qua
-        //- sex
+        // seg,ter,qua.qui.sex
 
         
         
@@ -33,7 +33,7 @@ public class Main{
             }
             else{
                 nomesDisciplinas[discCount] = entradaDisci;
-                discCount++;
+                
                 do { 
                 entrada = IO.readln("dia da semana:").toLowerCase();
                 boolean sair = false;
@@ -43,88 +43,20 @@ public class Main{
                         agenda[discCount][dia] = entrada;
                         dia++;
                     }
-                    case "nao" -> {sair = true;}
+                    case "nao" -> {sair = true; discCount++; dia = 0;}
                     default -> System.out.println("opçao invalida");
 
-                    
                 }
 
                 if(sair){
                     break;
                 }
 
-                // if(entrada.equals("nao")){
-                //     break;
-                // }
-                // else{
-                //     dias[dia] = entrada;
-                //     dia++;
-                // }
-            } while (dia<  agenda[discCount].length );
+                } while (dia<  agenda[discCount].length );
             }
-
-
-
-
-
-            
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // do { 
-
-        //     String disciplina = IO.readln("informe uma disciplina: ");
-
-        //     do { 
-        //         entrada = IO.readln("dia da semana:").toLowerCase();
-        //         boolean sair = false;
-
-        //         switch (entrada) {
-        //             case "seg","ter","qua","qui","sex" ->{
-        //                 agenda[discCount][dia] = entrada;
-        //                 dia++;
-        //             }
-        //             case "nao" -> {sair = true;}
-        //             default -> System.out.println("opçao invalida");
-
-                    
-        //         }
-
-        //         if(sair){
-        //             break;
-        //         }
-
-        //         // if(entrada.equals("nao")){
-        //         //     break;
-        //         // }
-        //         // else{
-        //         //     dias[dia] = entrada;
-        //         //     dia++;
-        //         // }
-        //     } while (dia<  agenda.length );
-
-        // } while (discCount < agenda.length);
-
-      
-
-        
-
-
-        
         if(agenda[0][0] == null){
             System.out.println("voce nao informou nem um dia para uma disciplina");
         }
@@ -132,23 +64,21 @@ public class Main{
             System.out.print("Voce tem aula nos seguintes dias: ");
 
             for(int i =0; i < discCount; i++){
-                if(nomesDisciplinas[i] == null){
+                System.out.println();
+                if(agenda[i][0] == null){
                     break;
                 }
+
+                System.out.print(nomesDisciplinas[i]+": ");
                 for(String diaDasemana : agenda[i]){
                     if(diaDasemana == null){
                         continue;
                     }
                     System.out.print(diaDasemana+", ");
                 }
-
-            System.out.print(agenda[i]+", ");
             }
         }
 
-        
-        
-       
         System.out.println();
     }
 }
