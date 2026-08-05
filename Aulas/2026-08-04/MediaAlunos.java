@@ -44,9 +44,9 @@ public class MediaAlunos {
         }
 
         for (double soma: somaAv) {
-            System.out.print(Math.round(  soma / (notas.length)) +"   ");
+            System.out.print(String.format("%03d", (Math.round(  soma / (notas.length)))) +"   ");
         }
-        System.out.println(Math.round(mediaGeral/notas[0].length));
+        System.out.println(String.format("%03d", (Math.round(mediaGeral/notas[0].length))));
         System.out.println("+++++++++++++++++++++++++++++++++++");
 
 
