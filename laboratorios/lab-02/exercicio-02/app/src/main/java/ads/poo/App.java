@@ -3,7 +3,7 @@
  */
 package ads.poo;
 import java.util.Random;
-import java.util.random.*
+import java.util.random.*;
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -13,22 +13,43 @@ public class App {
 
         Random random = new Random();
         boolean playing = true;
-        int guess = 0;
-        int count = 0;
-        int secretNumber = random.nextInt(1,101);
+
         do {
+            String entrada;
+            int guess = 0;
+            int count = 0;
+            int secretNumber = random.nextInt(1,101);
             do {
-                guess = Integer.parseInt(IO.readln("Entre com um número de 1-100: "));
+                entrada = (IO.readln("Entre com um número de 1-100: "));
 
-                if (guess = secretNumber) {
+               try{
+                   guess = Integer.parseInt(entrada);
+                }
+               catch(RuntimeException e){
+                   continue;
+               }
+                guess = Integer.parseInt(entrada);
+                if (guess == secretNumber) {
                     System.out.println("Você ACERTOU!");
-
+                    System.out.println("tentativas: "+ count);
                     break;
 
                 }
+                else if(guess < secretNumber){
+                    System.out.println("maior");
+                    count++;
+                }
+                else if(guess > secretNumber){
+                    System.out.println("menor");
+                    count++;
+                }
+
+            } while (!(entrada.equals("exit")));
 
 
-            } while (!(guess >= 1 || guess <= 100));
+            playing = (IO.readln("jogar novamente?(y/n): ").equals("y"))? true: false;
+            count=0;
+
         }while(playing);
     }
 }
