@@ -1,0 +1,14 @@
+
+celular: modelo, cor; ligar/desligar, carregar
+
+caderno: numeroDeFolhas, nivelDeUso; abrir, fechar
+
+
+
+
+carro revenda: preço, modelo, ano, cor, kilometragem  estaEmEstoque
+-trocarEstado, alterarCor
+
+
+carro Jogo: velocidade, modelo, cor   ,aceleraçao
+-acelerar , frear, trocarMarcha, direção
