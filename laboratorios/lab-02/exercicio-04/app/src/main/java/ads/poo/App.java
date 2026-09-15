@@ -4,12 +4,11 @@
 package ads.poo;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+   
 
     public static void main(String[] args) {
 
@@ -21,14 +20,15 @@ public class App {
 
             int num = random.nextInt(1, (tamanho*tamanho)+1);
 
-            for (int n : sortedNums){
-                if (n == num){
+            boolean repetido=false;
+            for(int j=1; j<sortedNums.length; j++){
 
+                if(num == sortedNums[j]){
+                    repetido = true;
                 }
+
             }
-
-
-            if(!(Arrays.stream(sortedNums).anyMatch(i))){
+            if(!repetido){
                 sortedNums[i] = num;
                 i++;
             }
@@ -36,7 +36,27 @@ public class App {
         }
 
         for(int n : sortedNums){
-            System.out.println(n);
+            System.out.print(n+"  ");
+        }
+        System.out.println("\n\n");
+        //10 unicos, 
+        List<Integer> sortedList =  Arrays.stream(sortedNums).boxed().toList();
+        
+        for(int i=1; i<(tamanho*tamanho)+1;i++){
+            
+            
+
+            if(sortedList.contains(i)){
+                System.out.print("*");
+            }
+            else{
+                System.out.print(".");
+
+            }
+
+            if((i%9) ==0){
+                System.out.println();
+            }
         }
 
 
