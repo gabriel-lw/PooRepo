@@ -5,113 +5,157 @@ package ads.poo;
 
 import java.util.HashMap;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.EAN13Writer;
+
 public class App {
     
     static HashMap<String, Livro> livrosCadastrados = new HashMap<>();
-    public static void main(String[] args) {
 
-        //chave, valor
-        // HashMap<String,String> mapa = new HashMap<>();
-
-        // mapa.put("123", "Juca");
-        // mapa.put("456", "Ana");
-        // mapa.put("789", "Pedro");
-        // mapa.put("1423", "Juca");
-        // mapa.put("1754", "Juca");
-        // //se, substitui pedro
-        // //mapa.put("789", "Joao");
-
-
-        // String nome = mapa.get("456");
-
-        // System.out.println(mapa.get("456"));
-
-
-
-
-        // String nome2 = mapa.get("0000"); //null
-
-        // if(nome2 == null){
-        //     System.out.println("nao encontrado");
-        // }else{
-        //     System.out.println(nome2);
-        // }
-
-
-        // mapa.forEach((chave,valor) -> System.out.println("chave: "+chave+ "  Valor: "+valor));
-
-
-        // for(var elemento : mapa.entrySet()){
-        //     System.out.println("Chave: "+ elemento.getKey()+ "  Valor: "+ elemento.getValue());
-        // }
-
-        // mapa.remove("456");
-
-        // mapa.values().removeIf(e -> e.equals("Juca"));
-
-
-       cadastrarLivro();
-      // cadastrarLivro();
-      // cadastrarLivro();
-
-       System.out.println();
-       listarISBNeTitulo();
-
-       System.out.println();
-       System.out.println();
-
-       consultarLivroISBN("1234567");
-
-
-
-
-        
-
-
-
+    public static void main(String[] args) throws Exception{
+        int largura = 105;
+        int altura = 5;
+        String isbn = "9788576053576";
+        EAN13Writer writer = new EAN13Writer();
+        // Gera a matriz de bits para o formato EAN_13
+        BitMatrix bitMatrix = writer.encode(isbn, BarcodeFormat.EAN_13, largura, 1);
+        // Renderiza o código de barras usando blocos cheios █ e espaços em branco
+        // https://www.unicodepedia.com/unicode/block-elements/2588/full-block/
+        for (int i = 0; i < altura; i++) {
+            for (int x = 0; x < bitMatrix.getWidth(); x++) {
+                if (bitMatrix.get(x, 0)) {
+                    System.out.print("\u2588");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println(); // Quebra de linha para a próxima camada da barra
+        }
+        System.out.println("ISBN-13: " + isbn);
     }
 
 
     public static void cadastrarLivro(){
         String ISBN;
         System.out.println("");
-        System.out.println("================================");
+        System.out.println("~~~~~~~~~~CADASTRAR LIVRO~~~~~~~~~~");
+        System.out.println("=".repeat(35));
         do { 
             ISBN = IO.readln("ISBN: ");
         } while (livrosCadastrados.containsKey(ISBN));
 
+
+        //fazer a verificação
         String titulo = IO.readln("Titulo: ");
         String autor = IO.readln("Autor: ");
         String dataDePublicacao = IO.readln("Data de Publicação(dd/mm/yy): ");
         livrosCadastrados.put(ISBN, new Livro(ISBN, titulo, autor, dataDePublicacao));
     }
 
-    public static void removerLivro(String ISBN){
+    public static void removerLivro(){
 
-        livrosCadastrados.remove(ISBN); //precisa verificar se existe ?
+        String ISBN;
+        System.out.println("");
+        System.out.println("~~~~~~~~~~~REMOVER LIVRO~~~~~~~~~~~");
+        System.out.println("=".repeat(35));
+        do { 
+            ISBN = IO.readln("ISBN do livro: ");
+        } while (livrosCadastrados.get(ISBN) == null); // ou usar contains key
 
+        livrosCadastrados.remove(ISBN);
+        System.out.println("Livro Removido!");
+        System.out.println("=".repeat(35));
+        
     }
 
     public static void listarISBNeTitulo(){
+        
+        System.out.println("");
+        System.out.println("~~~~~~~~~~LISTA DE LIVROS~~~~~~~~~~");
+        System.out.println("=".repeat(35));
+
         livrosCadastrados.forEach((k,v) -> System.out.println("ISBN:"+k+"  Título: "+v.getTitulo()));
+        System.out.println("=".repeat(35));
     }
 
-    public static void consultarLivroISBN(String ISBN){
+    public static void consultarLivroISBN(){
         
-        if(livrosCadastrados.get(ISBN) != null){
-            Livro livro = livrosCadastrados.get(ISBN);
-            System.out.println(livro);
-        }else{
-            System.out.println("ISBN não encontrado");
+        String ISBN;
+        boolean consultando = true;
+        System.out.println("");
+        System.out.println("~~~~~~~~~~CONSULTAR LIVRO~~~~~~~~~~");
+        System.out.println("=".repeat(35));
+        
+        do{
+            ISBN = IO.readln("ISBN do livro:");
+            if(livrosCadastrados.get(ISBN) != null){
+                Livro livro = livrosCadastrados.get(ISBN);
+                System.out.println(livro);
+            }else{
+                System.out.println("ISBN não encontrado!");
+                consultando = (IO.readln("deseja tentar novamente?(y/n)").equals("y")? true:false);
+
+
+            }
+        }while(consultando);
+    }
+
+    public static void consultarLivroAutor(){
+
+        System.out.println("");
+        System.out.println("~~~~~~~~~~CONSULTAR LIVRO~~~~~~~~~~");
+        System.out.println("=".repeat(35));
+        String autor = IO.readln("Autor:");
+        livrosCadastrados.forEach((k,v) -> {
+            if(v.getAutor().equals(autor)){
+                System.out.println("ISBN:"+k+"  Título: "+v.getTitulo());
+            }
+        });
+    }
+
+    public static void consultarAno(String anoDePublicação){
+
+        livrosCadastrados.forEach((k,v) -> {
+            if(v.getAnoDePublicacao().equals(anoDePublicação)){
+                System.out.println("ISBN:"+k+"  Título: "+v.getTitulo());
+            }
+        });
+    }
+
+    public static void atualizarLivro(){
+
+        boolean atualizando = true;
+        while(atualizando){
+            System.out.println();
+            System.out.println("=".repeat(35));
+            String ISBN = IO.readln("ISBN do livro: ");
+            if(livrosCadastrados.get(ISBN) != null){
+
+                
+                String novoTitulo = IO.readln("novo titulo: ");
+                String novoAutor = IO.readln("novo autor: ");
+                String novaData = IO.readln("Data de Publicação(dd/mm/yy): ");
+
+                //funciona pra white space e vazio
+                if(novoTitulo.isBlank() || novoAutor.isBlank() || novaData.isBlank()){
+                    System.out.println("Dados inválidos");
+                    //continua atualizar true, faz dnv
+                }
+                else{
+                    livrosCadastrados.get(ISBN).setTitulo(novoTitulo);
+                    livrosCadastrados.get(ISBN).setAutor(novoAutor);
+                    livrosCadastrados.get(ISBN).setAnoDePublicacao(novaData);
+                    atualizando = false;
+                }             
+
+            }else{
+                System.out.println("ISBN não encontrado!");
+                atualizando = (IO.readln("deseja tentar novamente?(y/n)").equals("y")? true:false);
+            } 
         }
     }
 
-    public static void consultarLivroAutor(String autor){
 
-        
-
-        
-
-    }
 
 }

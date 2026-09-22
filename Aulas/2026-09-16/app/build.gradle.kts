@@ -16,6 +16,17 @@ repositories {
 }
 
 dependencies {
+
+
+    // Source: https://mvnrepository.com/artifact/com.google.zxing/core
+    implementation("com.google.zxing:core:3.5.4")
+
+    dependencies {
+    implementation 'net.datafaker:datafaker:2.7.0'
+    }
+
+
+
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
 
