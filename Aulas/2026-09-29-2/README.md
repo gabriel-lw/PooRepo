@@ -10,26 +10,29 @@ class Aviao{
     - ArrayList~Motor~
   
 
-    +Aviao(maxTripulantes:int maxPassageiro:int, maxCombustivel:int
+    +Aviao(maxTripulantes:int,
+    maxPassageiro:int, maxCombustivel:int,
     numMotores:int,
     tipoMotor:String
     )
 
-    +ligarMotor(n:int)
-    +desligarMotor(n:int)
+    +ligarAviao()
+    +desligarAviao()
+
+    +ligarMotorN(n:int)
+    +desligarMotorN(n:int)
+
+    
 }
 
 class Motor{
     - String tipoMotor
     - boolean ligado
 
-    +ligarMotor()
-    +desligarMotor()
-
+    +ligarDesligarMotor(boolean estado)
     
-
 }
 
-Aviao "1" *-- "1-8" Motor : contains
+Aviao "1" *-- "1..8" Motor : contains
 
 ```
