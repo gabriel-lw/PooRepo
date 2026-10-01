@@ -7,9 +7,10 @@ public class Motor {
 
     Motor(String tipo){
         this.tipo = tipo;
+        this.ligado = false;
     }
 
-    public void LigarDesligar(boolean estado){
+    public void ligarDesligar(boolean estado){
         this.ligado = estado;
     }
 

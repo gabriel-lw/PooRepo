@@ -16,13 +16,10 @@ class Aviao{
     tipoMotor:String
     )
 
-    +ligarAviao()
-    +desligarAviao()
-
-    +ligarMotorN(n:int)
-    +desligarMotorN(n:int)
-
+    +ligarDesligarAviao(estado:boolean)
     
+    +ligarDesligarMotorN(n:int, estado:boolean)
+   
 }
 
 class Motor{
