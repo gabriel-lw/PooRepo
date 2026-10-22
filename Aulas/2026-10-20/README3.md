@@ -5,6 +5,11 @@ classDiagram
 class Veiculo{
     
     velocidade:Double
+    
+    meioDePropulsao:String
+    numeroOcupantes:int
+    carga:
+    acelerar(n:int)
 }
 
 class VeiculoTerrestre{
@@ -14,23 +19,35 @@ class VeiculoTerrestre{
 
 class veiculoAquatico{
     
-
+    
 }
 
 class Carro{
-
+    //nao precisa
 }
 
 class Aviao{
-    motores
+    numeroMotores
+    tipoDeMotores
+    +
 
 }
 
 class Barco{
-
+    tamanho:int
+    atrito:double
+    possuiAncora:bool
+    ancoraLançada:bool
+    lancarAncora() : bool
 }
 
 class Caminhao{
-    carga:
-
+    possuiBasculante:bool
+    basculanteaberto:bool
+  
 }
+
+Veiculo <| -- VeiculoTerrestre
+VeiculoTerrestre <| -- Caminhao
+VeiculoTerrestre <| -- Carro
+
